@@ -65,10 +65,11 @@ class War(self):
             saxonarmy = ([])
     
         def addViking(self, viking):
-            vikingarmy.append(
+            self.vikingarmy.append(viking)
     
     
-        def addSaxon(self):
+        def addSaxon(self, saxon):
+            self.saxonarmy.append(saxon)
     
     
     
@@ -80,13 +81,6 @@ class War(self):
 
 
 
-
-
-
-
-    return "{} has received {} points of damage".format(self.name, damage)
-        else: 
-            return "{} has died in act of combat".format(self.name)
 
 
 
