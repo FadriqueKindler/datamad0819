@@ -1,0 +1,85 @@
+def WebScraping(url):
+    
+    url = "https://ceoworld.biz/2019/03/05/these-are-50-highest-points-scorer-in-nba-history-1946-to-2019//"
+
+    results = requests.get(url).text
+    soup = BeautifulSoup(results, 'html.parser') 
+
+    soup = soup.prettify()
+
+
+    player_tags = ["td"]
+    player_info = [element.text for element in soup.find_all(player_tags)]
+
+
+    player_info_lst = []
+    for ind in range(0, len(player_info), 11): 
+    player_info_lst.append(player_info[ind: (ind+11)])
+
+    player_df = pd.DataFrame(player_info_lst)
+
+    col_tags = ["th"]
+    col_name = [element.text for element in soup.find_all(col_tags)]
+
+    col_df = pd.DataFrame(col_name)
+
+    col_df = col_df.transpose()
+    
+
+    col_df = col_df.rename(columns=col_df.iloc[0])
+
+
+    player_df = player_df.rename(columns={0: "Rank", 1: "Player",2: "Points",3: "Seasons",4: "Games",5: "FGM",6: "FGA",7: "3PM",8: "3PA",9: "FTM",10: "FTA",})
+
+
+    frames = [col_df, player_df]
+
+    player_finalstats_df = pd.concat(frames)
+
+
+    player_finalstats_df = player_finalstats_df[player_finalstats_df.Rank != "Rank"]
+
+    return player_finalstats_df
+
+url = "https://ceoworld.biz/2019/03/05/these-are-50-highest-points-scorer-in-nba-history-1946-to-2019//"
+
+
+
+
+import requests
+from bs4 import BeautifulSoup
+
+URL = "https://ceoworld.biz/2019/03/05/these-are-50-highest-points-scorer-in-nba-history-1946-to-2019//"
+
+class MetroLineas: 
+
+    def __init__(self, url=URL): 
+        self.url_metro = url
+        self.urls_lineas = []
+
+    def scan(self): 
+        response = requests.get(self.url_metro)
+        soup = BeautifulSoup(response.text, "html.parser")
+        lineas = soup.find('ul', {"class": "list__otraslineas"})
+        lineas = lineas.find_all('a')
+        self.urls_lineas = [self.url_metro + linea.get('href') for linea in lineas]
+
+class Linea: 
+    
+    def __init__(self, url): 
+        self.url = url
+        self.name = ""
+        self.paradas = []
+
+    def scan(self): 
+        response = requests.get(self.url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        # lista de estaciones
+        estaciones = soup.find('ul', {"class": "list-line accordion"})
+        estaciones = estaciones.find_all('p', {"class": "list-line__btn__text"})
+        self.paradas = [estacion.text for estacion in estaciones]
+        # nombre de la linea
+        self.name = soup.find('span', {"class": "text-line"}).text.strip()
+
+
+
