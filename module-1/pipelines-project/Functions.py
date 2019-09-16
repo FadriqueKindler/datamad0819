@@ -110,8 +110,7 @@ def wrangle_final_NBA50_df(master_player_df):
     return master_player_df
 
 
-def get_player_info():
+def get_player_info(x):
     print("Enter Player Name:")
     x = input()
-    if x in (master_player_df['Player']):        
-        return (master_player_df.loc[ '{}' , : ].format(x))
+    return master_player_df[master_player_df['Player'] == x]
