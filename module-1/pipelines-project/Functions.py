@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 import lxml.html as lh
 import re
 
-
 def get_players():
     df_players = pd.read_csv("../your-code/DATA/nba-players-stats/players.csv")
     return df_players
@@ -113,4 +112,4 @@ def wrangle_final_NBA50_df(master_player_df):
 def get_player_info(x):
     print("Enter Player Name:")
     x = input()
-    return master_player_df[master_player_df['Player'] == x]
+    return master_player_df[master_player_df["Player"] == x]

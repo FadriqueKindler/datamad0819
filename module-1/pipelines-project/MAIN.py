@@ -1,6 +1,7 @@
 import Functions
 from outputs import print_file
 
+
 def main():
     df_players = get_players()
     filtered_players = clean_df_players(df_players)
