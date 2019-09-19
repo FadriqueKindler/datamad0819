@@ -1,8 +1,10 @@
-import Functions
+from Functions import get_players, clean_df_players, get_player_data,wrangle_df_player_data,get_season_stats,wrangle_df_season_stats,merging_dfs,wrangle_complete_df,Best_50,final_NBA50_df,wrangle_final_NBA50_df,get_player_info
 from outputs import print_file
 
 
+
 def main():
+ 
     df_players = get_players()
     filtered_players = clean_df_players(df_players)
     df_player_data = get_player_data()
